@@ -9,7 +9,7 @@
   "routes": [
     {
       "src": "/api/export-to-csv",
-      "dest": "/api/export-to-csv.ts"
+      "dest": "supabase/results"
     }
   ]
 }
