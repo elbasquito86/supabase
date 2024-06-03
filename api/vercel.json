@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "api/export-to-csv.ts",
+      "src": "export-to-csv.ts",
       "use": "@vercel/node"
     }
   ],
