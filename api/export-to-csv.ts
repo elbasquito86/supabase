@@ -1,8 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 import { format } from '@fast-csv/format';
-import { writeFileSync } from 'fs';
-import { join } from 'path';
 import { VercelRequest, VercelResponse } from '@vercel/node';
+import { Readable } from 'stream';
 
 // Initialize Supabase Client
 const supabaseUrl = process.env.SUPABASE_URL!;
@@ -33,22 +32,26 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       csvData.push([row.shop_id, row.avg_rating]);
     });
 
-    // Path to the results directory
-    const resultsDir = join(process.cwd(), 'results');
-
-    // Write CSV file
-    const csvFilePath = join(resultsDir, 'data.csv');
-    console.log('Writing CSV file to:', csvFilePath);
+    // Create a CSV stream
     const csvStream = format({ headers: true });
-    const writableStream = writeFileSync(csvFilePath, 'utf8');
-    csvStream.pipe(writableStream);
+    const readableStream = new Readable();
+    readableStream._read = () => {}; // _read is required but you can noop it
+    csvStream.pipe(readableStream);
+
     csvData.forEach((row) => csvStream.write(row));
     csvStream.end();
 
-    console.log('CSV file created successfully');
-    res.status(200).json({ message: 'CSV file created', filePath: csvFilePath });
+    // Set response headers for CSV file download
+    res.setHeader('Content-Type', 'text/csv');
+    res.setHeader('Content-Disposition', 'attachment; filename="data.csv"');
+
+    // Stream the CSV data in the response
+    readableStream.pipe(res);
+
+    console.log('CSV file created and streamed successfully');
   } catch (error) {
     console.error('Error:', error);
     res.status(500).json({ error: error.message });
   }
 }
+
