@@ -1,16 +1,16 @@
 {
-    "version": 2,
-    "builds": [
-      {
-        "src": "api/export-to-csv.ts",
-        "use": "@vercel/node"
-      }
-    ],
-    "routes": [
-      {
-        "src": "/api/export-to-csv",
-        "dest": "/api/results/export-to-csv.ts"
-      }
-    ]
-  }
+  "version": 2,
+  "builds": [
+    {
+      "src": "export-to-csv.ts",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/export-to-csv",
+      "dest": "/api/export-to-csv.ts"
+    }
+  ]
+}
   
