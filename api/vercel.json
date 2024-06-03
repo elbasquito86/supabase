@@ -2,15 +2,16 @@
   "version": 2,
   "builds": [
     {
-      "src": "export-to-csv.ts",
+      "src": "api/export-to-csv.ts",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/api/export-to-csv",
-      "dest": "supabase/results"
+      "dest": "/api/export-to-csv.ts"
     }
   ]
 }
+
   
