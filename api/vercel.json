@@ -2,14 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "export-to-csv.ts",
+      "src": "api/export-to-json.ts",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
-      "src": "/api/export-to-csv",
-      "dest": "/results/data.csv"
+      "src": "/api/export-to-json",
+      "dest": "/api/export-to-json.ts"
     }
   ]
 }
