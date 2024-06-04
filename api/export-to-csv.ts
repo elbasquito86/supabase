@@ -16,7 +16,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // Query data from Supabase
     console.log('Querying Supabase...');
     const { data, error } = await supabase
-      .from('coffee_shops') // Replace 'your_table' with your actual table name
+      .from('your_table') // Replace 'your_table' with your actual table name
       .select('shop_id, avg_rating');
 
     if (error) {
